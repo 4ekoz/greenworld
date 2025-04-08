@@ -1,0 +1,171 @@
+/* Register.css */
+
+/* General Styles */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #fff; /* خلفية بيضاء */
+}
+
+.register-box {
+  background: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 400px;
+  animation: fadeIn 1s ease-in-out; /* Fade-In Animation */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h2 {
+  color: #2c7a4b;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+p {
+  color: #777;
+  font-size: 1rem;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+/* Input Group */
+.input-group {
+  position: relative;
+  margin: 20px 0;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  padding-right: 50px;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.3s ease-in-out;
+}
+
+input:focus {
+  border-color: #2c7a4b;
+  outline: none;
+}
+
+/* Icon inside Input */
+.icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+.icon:hover {
+  color: #2c7a4b;
+}
+
+/* Error Text */
+.error-text {
+  color: red;
+  font-size: 0.8rem;
+  text-align: left;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+/* Sign Up Button */
+.register-btn {
+  background-color: #2c7a4b;
+  color: white;
+  padding: 15px;
+  width: 100%;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin-top: 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.register-btn:hover {
+  background-color: #256a41;
+  transform: scale(1.02); /* Slight zoom effect on hover */
+}
+
+.register-btn:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+/* Google Login Button */
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  padding: 15px;
+  background-color: white;
+  color: #777;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.google-btn img {
+  width: 25px;
+  height: 25px;
+}
+
+.google-btn:hover {
+  background-color: #f1f1f1;
+  border-color: #bbb;
+}
+
+/* Signup Link */
+.signup-link {
+  margin-top: 15px;
+  text-decoration: none;
+}
+
+.signup-link a {
+  color: #2c7a4b;
+  font-size: 0.9rem;
+  transition: color 0.3s ease-in-out;
+}
+
+.signup-link a:hover {
+  color: #256a41;
+}
+
+/* Additional Styling for "or continue with" */
+.or-continue-with {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #777;
+}
