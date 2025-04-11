@@ -97,7 +97,7 @@
 }
 
 /* نص "أو المتابعة مع" */
-.or-divider {
+.or-text {
   display: flex;
   align-items: center;
   margin: 20px 0;
@@ -105,37 +105,32 @@
   font-size: 12px;
 }
 
-.or-divider::before,
-.or-divider::after {
+.or-text::before,
+.or-text::after {
   content: "";
   flex: 1;
   border-bottom: 1px solid #ddd;
   margin: 0 10px;
 }
 
-/* زر جوجل */
-.google-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background: white;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s;
+/* حاوية تسجيل الدخول بجوجل */
+.google-login-container {
+  position: relative;
+  margin: 15px 0;
 }
 
-.google-btn:hover {
-  background: #f8f8f8;
-  border-color: #ccc;
-}
-
-.google-icon {
-  width: 18px;
-  margin-right: 10px;
+/* مؤشر التحميل */
+.google-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #2d5c3f;
+  z-index: 1;
 }
 
 /* رابط نسيان كلمة المرور */
@@ -173,4 +168,43 @@
 .signup-link a:hover {
   color: #244a32;
   text-decoration: underline;
+}
+
+/* رسائل الخطأ */
+.error-text {
+  color: #e74c3c;
+  font-size: 12px;
+  text-align: right;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+/* Google Login Button */
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  background-color: white;
+  color: #666;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.google-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+.google-btn:hover {
+  background-color: #f9f9f9;
+  border-color: #ddd;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

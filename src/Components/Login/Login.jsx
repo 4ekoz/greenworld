@@ -7,13 +7,13 @@ import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash, FaEnvelope } from "react-icons/fa";
-import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
+import { FcGoogle } from "react-icons/fc";
 import "./Login.css";
 
 export default function Login() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [googleLoading, setGoogleLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
     const validationSchema = Yup.object({
@@ -35,29 +35,29 @@ export default function Login() {
                 if (response.data.message === "login successfully") {
                     const token = response.data.token;
                     localStorage.setItem("token", token);
-                    axios.defaults.headers.common["token"] = token; // ✅ إرسال التوكن في الهيدر
+                    axios.defaults.headers.common["token"] = token;
                     toast.success("Login successful!");
                     setTimeout(() => navigate("/home"), 1500);
                 } else {
-                    toast.error("Invalid credentials");
+                    toast.error(response.data.message || "Invalid credentials");
                 }
             } catch (error) {
-                toast.error("Invalid credentials");
+                toast.error(error.response?.data?.message || "Invalid credentials");
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
         },
     });
 
-    const handleGoogleLoginSuccess = async (response) => {
+    const handleGoogleLogin = async () => {
+        setGoogleLoading(true);
         try {
-            const decoded = jwtDecode(response.credential);
-            const token = response.credential;
-            localStorage.setItem("token", token);
-            axios.defaults.headers.common["token"] = token; // ✅ إرسال التوكن في الهيدر
-            toast.success(`Welcome ${decoded.name}!`);
-            setTimeout(() => navigate("/home"), 1500);
+            window.location.href = "https://green-world-vert.vercel.app/auth/google";
         } catch (error) {
+            console.error("Google login error:", error);
             toast.error("Google Sign-In Failed!");
+        } finally {
+            setGoogleLoading(false);
         }
     };
 
@@ -79,7 +79,7 @@ export default function Login() {
                     </div>
                     {formik.touched.password && formik.errors.password && <p className="error-text">{formik.errors.password}</p>}
 
-                    <motion.button type="submit" className={`btn-login ${!formik.isValid ? "disabled-btn" : ""}`} disabled={!formik.isValid}>
+                    <motion.button type="submit" className={`btn-login ${!formik.isValid ? "disabled-btn" : ""}`} disabled={!formik.isValid || loading}>
                         {loading ? "Loading..." : "Login"}
                     </motion.button>
 
@@ -89,7 +89,13 @@ export default function Login() {
 
                     <p className="or-text">or continue with</p>
 
-                    <GoogleLogin onSuccess={handleGoogleLoginSuccess} onError={() => toast.error("Google Sign-In Failed!")} />
+                    <div className="google-login-container">
+                        <button className="google-btn" onClick={handleGoogleLogin}>
+                            <FcGoogle size={20} />
+                            Login with Google
+                        </button>
+                        {googleLoading && <div className="google-loading">Loading...</div>}
+                    </div>
 
                     <p className="signup-link">Don't have an Account? <Link to="/register">Sign Up</Link></p>
                 </form>

@@ -8,17 +8,15 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash, FaEnvelope, FaUser } from "react-icons/fa";
 import { Spinner } from "react-bootstrap";
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { FcGoogle } from "react-icons/fc";
 import "./Register.css";
-import googleIcon from "./googleicon.png";
 
 export default function Register() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  // استبدل هذا الـ Client ID بالقيمة الصحيحة من Google Cloud Console
-  const GOOGLE_CLIENT_ID = "456976296217-34un0pgp4ot54tgjrg83lb42t2vm2lme.apps.googleusercontent.com";
   const validationSchema = Yup.object({
     userName: Yup.string()
       .min(3, "Username must be at least 3 characters")
@@ -26,14 +24,15 @@ export default function Register() {
       .matches(/^[a-zA-Z0-9_]+$/, "Only letters, numbers, and underscores allowed")
       .required("Username is required"),
     email: Yup.string()
-      .matches(/^[^\s@]+@gmail\.com$/, "Invalid email. Only Gmail addresses are allowed")
+      .email("Invalid email format")
+      .matches(/^[^\s@]+@gmail\.com$/, "Only Gmail addresses are allowed")
       .required("Email is required"),
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
       .matches(/[a-z]/, "Password must contain at least one lowercase letter")
       .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
       .matches(/\d/, "Password must contain at least one number")
-      .matches(/[@$!%*?&]/, "Must contain at least one special character")
+      .matches(/[@$!%*?&]/, "Password must contain at least one special character")
       .required("Password is required"),
   });
 
@@ -68,70 +67,71 @@ export default function Register() {
       } catch (err) {
         setErrors({ email: err.response?.data?.message || "An error occurred" });
         toast.error("❌ " + (err.response?.data?.message || "An error occurred during registration."));
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     },
   });
 
+  const handleGoogleSignup = async () => {
+    setGoogleLoading(true);
+    try {
+      window.location.href = "https://green-world-vert.vercel.app/auth/google";
+    } catch (error) {
+      console.error("Google signup error:", error);
+      toast.error("Google Sign-Up Failed!");
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
   return (
-    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      <div className="register-container">
-        <motion.div className="register-box" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, ease: "easeOut" }}>
-          <h2>Create Account</h2>
-          <p>create an account so you can explore all the existing posts</p>
-          <form onSubmit={formik.handleSubmit}>
-            {/* Username Field */}
-            <div className="input-group">
-              <input type="text" placeholder="Username" name="userName" maxLength={10} onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.userName} />
-              <FaUser className="icon" />
-            </div>
-            {formik.touched.userName && formik.errors.userName && <p className="error-text">{formik.errors.userName}</p>}
+    <div className="register-container">
+      <motion.div className="register-box" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, ease: "easeOut" }}>
+        <h2>Create Account</h2>
+        <p>create an account so you can explore all the existing posts</p>
+        <form onSubmit={formik.handleSubmit}>
+          {/* Username Field */}
+          <div className="input-group">
+            <input type="text" placeholder="Username" name="userName" maxLength={10} onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.userName} />
+            <FaUser className="icon" />
+          </div>
+          {formik.touched.userName && formik.errors.userName && <p className="error-text">{formik.errors.userName}</p>}
 
-            {/* Email Field */}
-            <div className="input-group">
-              <input type="text" placeholder="Email" name="email" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.email} />
-              <FaEnvelope className="icon" />
-            </div>
-            {formik.touched.email && formik.errors.email && <p className="error-text">{formik.errors.email}</p>}
+          {/* Email Field */}
+          <div className="input-group">
+            <input type="text" placeholder="Email" name="email" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.email} />
+            <FaEnvelope className="icon" />
+          </div>
+          {formik.touched.email && formik.errors.email && <p className="error-text">{formik.errors.email}</p>}
 
-            {/* Password Field */}
-            <div className="input-group">
-              <input type={showPassword ? "text" : "password"} placeholder="Password" name="password" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.password} />
-              <span className="icon" onClick={() => setShowPassword(!showPassword)}>{showPassword ? <FaEyeSlash /> : <FaEye />}</span>
-            </div>
-            {formik.touched.password && formik.errors.password && <p className="error-text">{formik.errors.password}</p>}
+          {/* Password Field */}
+          <div className="input-group">
+            <input type={showPassword ? "text" : "password"} placeholder="Password" name="password" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.password} />
+            <span className="icon" onClick={() => setShowPassword(!showPassword)}>{showPassword ? <FaEyeSlash /> : <FaEye />}</span>
+          </div>
+          {formik.touched.password && formik.errors.password && <p className="error-text">{formik.errors.password}</p>}
 
-            {/* Sign Up Button */}
-            <button type="submit" className="register-btn" disabled={!(formik.isValid && formik.dirty) || loading}>
-              {loading ? <Spinner animation="border" size="sm" /> : "Sign_Up"}
+          {/* Sign Up Button */}
+          <button type="submit" className="register-btn" disabled={!(formik.isValid && formik.dirty) || loading}>
+            {loading ? <Spinner animation="border" size="sm" /> : "Sign_Up"}
+          </button>
+
+          {/* Google Login Button */}
+          <div className="or-continue-with">or continue with</div>
+          <div className="google-login-container">
+            <button className="google-btn" onClick={handleGoogleSignup}>
+              <FcGoogle size={20} />
+              Sign up with Google
             </button>
+            {googleLoading && <div className="google-loading">Loading...</div>}
+          </div>
 
-            {/* Google Login Button */}
-            <div className="or-continue-with">or continue with</div>
-            <GoogleLogin
-              onSuccess={(credentialResponse) => {
-                console.log("Google Login Success:", credentialResponse);
-                // هنا يمكنك إرسال الـ credentialResponse.credential إلى السيرفر للتحقق
-                toast.success("Google login successful!");
-                navigate("/login"); // توجيه المستخدم بعد التسجيل
-              }}
-              onError={() => {
-                toast.error("Google login failed. Please try again.");
-              }}
-              useOneTap
-            >
-              <button className="google-btn">
-                <img src={googleIcon} alt="Google Logo" />
-                تسجيل الدخول باستخدام Google
-              </button>
-            </GoogleLogin>
-
-            {/* Already have an account link */}
-            <p className="signup-link">Already have an account? <Link to="/login">Login</Link></p>
-          </form>
-        </motion.div>
-        <ToastContainer position="top-right" autoClose={3000} />
-      </div>
-    </GoogleOAuthProvider>
+          {/* Already have an account link */}
+          <p className="signup-link">Already have an account? <Link to="/login">Login</Link></p>
+        </form>
+      </motion.div>
+      <ToastContainer position="top-right" autoClose={3000} />
+    </div>
   );
 }
