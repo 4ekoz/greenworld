@@ -52,7 +52,9 @@ export default function Login() {
     const handleGoogleLogin = async () => {
         setGoogleLoading(true);
         try {
-            window.location.href = "https://green-world-vert.vercel.app/auth/google";
+            const currentURL = window.location.origin;
+            const redirectURL = `${currentURL}/dashboard`;
+            window.location.href = `https://green-world-vert.vercel.app/auth/google?redirect_url=${encodeURIComponent(redirectURL)}&origin=${encodeURIComponent(currentURL)}`;
         } catch (error) {
             console.error("Google login error:", error);
             toast.error("Google Sign-In Failed!");
