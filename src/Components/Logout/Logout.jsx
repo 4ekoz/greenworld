@@ -1,23 +1,35 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import styles from "./Logout.css"; // استيراد ملف CSS
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import React, { useState } from "react";
+import styles from "./Logout.module.css";
+import { FaSignOutAlt } from "react-icons/fa";
+import Login from "../Login/Login";
 
-function Logout() {
-  const navigate = useNavigate();
+export default function Logout() {
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    setShowLoginModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowLoginModal(false);
+    window.location.reload();
   };
 
   return (
-    <button className={styles.logoutButton} onClick={handleLogout}>
-      <FontAwesomeIcon icon={faSignOutAlt} className={styles.logoutIcon} />
-      Logout
-    </button>
+    <>
+      <div className={styles.logoutContainer}>
+        <button onClick={handleLogout} className={styles.logoutButton}>
+          <FaSignOutAlt className={styles.logoutIcon} />
+          Logout
+        </button>
+      </div>
+
+      {showLoginModal && (
+        <div className={styles.modalOverlay}>
+          <Login onClose={handleCloseModal} isModal={true} />
+        </div>
+      )}
+    </>
   );
 }
-
-export default Logout;

@@ -1,14 +1,21 @@
-  import React from 'react';
-  import styles from './Layout.module.css';
-  import { Outlet } from 'react-router-dom';
-  import Navbar from '../Navbar/Navbar'
-  export default function Layout() {
-    return (
-      <div>
-        <Navbar/>
-        <div className={styles.container}>
-            <Outlet/>
-        </div>
-      </div>
-    );
-  }
+import React from 'react';
+import styles from './Layout.module.css';
+import { Outlet, useLocation } from 'react-router-dom';
+
+export default function Layout() {
+  const location = useLocation();
+  const isAuthRoute = [
+    '/login',
+    '/register',
+    '/forgot-password',
+    '/resetpassword',
+    '/verify-email',
+    '/verifycode'
+  ].includes(location.pathname);
+
+  return (
+    <div className={styles.container}>
+      <Outlet />
+    </div>
+  );
+}

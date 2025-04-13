@@ -2,14 +2,14 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ element }) => {
+function ProtectedRoute({ element: Element }) {
   const token = localStorage.getItem('token');
 
   if (!token) {
     return <Navigate to="/login" />;
   }
 
-  return element;
-};
+  return Element;
+}
 
 export default ProtectedRoute;

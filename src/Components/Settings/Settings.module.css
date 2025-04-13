@@ -1,0 +1,75 @@
+.settingsContainer {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.settingsContainer h1 {
+    color: #1a3a18;
+    margin-bottom: 30px;
+}
+
+.settingsContent {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.settingSection {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.settingSection:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.settingSection h2 {
+    color: #1a3a18;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.settingItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.settingItem label {
+    color: #333;
+    font-size: 1rem;
+}
+
+.settingItem input[type="text"],
+.settingItem input[type="email"],
+.settingItem select {
+    width: 60%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.settingItem input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.settingItem select {
+    background-color: white;
+    cursor: pointer;
+}
+
+.settingItem input:focus,
+.settingItem select:focus {
+    outline: none;
+    border-color: #1a3a18;
+    box-shadow: 0 0 0 2px rgba(26, 58, 24, 0.1);
+}

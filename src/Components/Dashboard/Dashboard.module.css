@@ -1,0 +1,241 @@
+.container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #FAFAFA;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #1a3a18;
+    color: white;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.sidebarContent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 20px;
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.menuItem:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateX(5px);
+}
+
+.menuItem:hover .icon {
+    transform: scale(1.1);
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.menuItem.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bottomMenu {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mainContent {
+    flex: 1;
+    padding: 32px;
+    background-color: #FAFAFA;
+}
+
+.header {
+    display: none;
+}
+
+.notifications {
+    position: relative;
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.notificationIcon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.notificationCount {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #ff4444;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.userProfile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.dashboardContent {
+    max-width: 1200px;
+}
+
+.dashboardContent h1 {
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: #000;
+    font-weight: 600;
+}
+
+.formSection {
+    display: block;
+    margin-bottom: 30px;
+    max-width: 800px;
+    padding: 0;
+}
+
+.uploadSection {
+    border: 1px solid #F2F2F2;
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 32px;
+    background-color: white;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.uploadButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.uploadIcon {
+    width: 100%;
+    height: auto;
+    max-width: 280px;
+    opacity: 1;
+}
+
+.uploadButton div:first-child {
+    color: #666666;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.uploadButton div:last-child {
+    color: #999999;
+    font-size: 12px;
+}
+
+.formGroup {
+    margin-bottom: 24px;
+}
+
+.inputRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 8px;
+    color: #1a3a18;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.formGroup input,
+.formGroup textarea {
+    width: 100%;
+    padding: 16px;
+    border: 1.5px solid #E0E0E0;
+    border-radius: 12px;
+    font-size: 14px;
+    background-color: #FFFFFF;
+    height: 52px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: #333333;
+    font-weight: 500;
+}
+
+.formGroup input::placeholder,
+.formGroup textarea::placeholder {
+    color: #666666;
+    font-weight: 400;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+    outline: none;
+    border-color: #1a3a18;
+    box-shadow: 0px 0px 0px 4px rgba(26, 58, 24, 0.1);
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+}
+
+.statCard {
+    background-color: white;
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid #e6e6e6;
+}
+
+.statCard h3 {
+    color: #666;
+    font-size: 14px;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.statCard p {
+    color: #333;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+}
