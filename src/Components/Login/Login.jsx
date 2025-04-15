@@ -68,91 +68,93 @@ export default function Login({ onClose, isModal = false }) {
     };
 
     return (
-        <motion.div
-            className={`${styles.loginBox} ${isModal ? styles.modalLogin : ''}`}
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-        >
-            <h2 className={styles.loginTitle}>Login to your Account</h2>
-            <p className={styles.welcomeText}>Welcome back, you've been missed</p>
+        <div className={styles.loginContainer}>
+            <motion.div
+                className={`${styles.loginBox} ${isModal ? styles.modalLogin : ''}`}
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+            >
+                <h2 className={styles.loginTitle}>Login to your Account</h2>
+                <p className={styles.welcomeText}>Welcome back, you've been missed</p>
 
-            <form onSubmit={formik.handleSubmit}>
-                <div className={styles.inputGroup}>
-                    <input
-                        type="text"
-                        id="email"
-                        name="email"
-                        placeholder="Enter your email"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.email}
-                    />
-                    <span className={styles.inputIcon}><FaEnvelope /></span>
-                </div>
-                {formik.touched.email && formik.errors.email && (
-                    <p className={styles.errorText}>{formik.errors.email}</p>
-                )}
+                <form onSubmit={formik.handleSubmit}>
+                    <div className={styles.inputGroup}>
+                        <input
+                            type="text"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.email}
+                        />
+                        <span className={styles.inputIcon}><FaEnvelope /></span>
+                    </div>
+                    {formik.touched.email && formik.errors.email && (
+                        <p className={styles.errorText}>{formik.errors.email}</p>
+                    )}
 
-                <div className={styles.inputGroup}>
-                    <input
-                        type={showPassword ? "text" : "password"}
-                        id="password"
-                        name="password"
-                        placeholder="Enter your password"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.password}
-                    />
-                    <span
-                        className={styles.inputIcon}
-                        onClick={() => setShowPassword(!showPassword)}
-                        style={{ cursor: 'pointer' }}
+                    <div className={styles.inputGroup}>
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.password}
+                        />
+                        <span
+                            className={styles.inputIcon}
+                            onClick={() => setShowPassword(!showPassword)}
+                            style={{ cursor: 'pointer' }}
+                        >
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </span>
+                    </div>
+                    {formik.touched.password && formik.errors.password && (
+                        <p className={styles.errorText}>{formik.errors.password}</p>
+                    )}
+
+                    <motion.button
+                        type="submit"
+                        className={`${styles.btnLogin} ${!formik.isValid ? styles.disabledBtn : ""}`}
+                        disabled={!formik.isValid || loading}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
                     >
-                        {showPassword ? <FaEyeSlash /> : <FaEye />}
-                    </span>
-                </div>
-                {formik.touched.password && formik.errors.password && (
-                    <p className={styles.errorText}>{formik.errors.password}</p>
-                )}
+                        {loading ? "Loading..." : "Login"}
+                    </motion.button>
 
-                <motion.button
-                    type="submit"
-                    className={`${styles.btnLogin} ${!formik.isValid ? styles.disabledBtn : ""}`}
-                    disabled={!formik.isValid || loading}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                >
-                    {loading ? "Loading..." : "Login"}
-                </motion.button>
+                    <div className={styles.forgetPasswordContainer}>
+                        <Link to="/forgot-password" className={styles.forgetPasswordLink}>
+                            Forgot Password?
+                        </Link>
+                    </div>
 
-                <div className={styles.forgetPasswordContainer}>
-                    <Link to="/forgot-password" className={styles.forgetPasswordLink}>
-                        Forgot Password?
-                    </Link>
-                </div>
+                    <p className={styles.orText}>or continue with</p>
 
-                <p className={styles.orText}>or continue with</p>
+                    <div className={styles.googleLoginContainer}>
+                        <button
+                            className={styles.googleBtn}
+                            onClick={handleGoogleLogin}
+                            disabled={googleLoading}
+                        >
+                            <FcGoogle size={20} />
+                            Login with Google
+                        </button>
+                        {googleLoading && <div className={styles.googleLoading}>Loading...</div>}
+                    </div>
 
-                <div className={styles.googleLoginContainer}>
-                    <button
-                        className={styles.googleBtn}
-                        onClick={handleGoogleLogin}
-                        disabled={googleLoading}
-                    >
-                        <FcGoogle size={20} />
-                        Login with Google
-                    </button>
-                    {googleLoading && <div className={styles.googleLoading}>Loading...</div>}
-                </div>
-
-                {!isModal && (
-                    <p className={styles.signupLink}>
-                        Don't have an Account? <Link to="/register">Sign Up</Link>
-                    </p>
-                )}
-            </form>
+                    {!isModal && (
+                        <p className={styles.signupLink}>
+                            Don't have an Account? <Link to="/register">Sign Up</Link>
+                        </p>
+                    )}
+                </form>
+            </motion.div>
             <ToastContainer position="top-right" autoClose={3000} />
-        </motion.div>
+        </div>
     );
 }

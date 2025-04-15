@@ -1,49 +1,69 @@
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--light-color);
+    padding: 20px;
+}
+
 .loginBox {
     background: white;
-    padding: 30px;
-    border-radius: 12px;
+    padding: 40px;
+    border-radius: 15px;
     width: 100%;
     max-width: 400px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .modalLogin {
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
 }
 
 .loginTitle {
-    color: #1a3a18;
-    font-size: 24px;
-    margin-bottom: 10px;
+    color: #2c7a4b;
+    font-size: 28px;
+    margin-bottom: 15px;
     text-align: center;
+    font-weight: 600;
 }
 
 .welcomeText {
     color: #666;
     text-align: center;
-    margin-bottom: 25px;
-    font-size: 14px;
+    margin-bottom: 30px;
+    font-size: 16px;
 }
 
 .inputGroup {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .inputGroup input {
     width: 100%;
-    padding: 12px 40px 12px 15px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 14px;
+    padding: 15px 45px 15px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 16px;
     transition: all 0.3s ease;
+    background-color: #f8f8f8;
 }
 
 .inputGroup input:focus {
-    border-color: #1a3a18;
+    border-color: #2c7a4b;
+    background-color: #fff;
     outline: none;
-    box-shadow: 0 0 0 2px rgba(26, 58, 24, 0.1);
+    box-shadow: 0 0 0 3px rgba(44, 122, 75, 0.1);
 }
 
 .inputIcon {
@@ -51,31 +71,40 @@
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #666;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.inputIcon:hover {
+    color: #2c7a4b;
 }
 
 .errorText {
-    color: #dc3545;
-    font-size: 12px;
-    margin-top: -15px;
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 5px;
     margin-bottom: 15px;
 }
 
 .btnLogin {
     width: 100%;
-    padding: 12px;
-    background: #1a3a18;
+    padding: 15px;
+    background: #2c7a4b;
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-top: 10px;
 }
 
-.btnLogin:hover {
-    background: #142e12;
+.btnLogin:hover:not(.disabledBtn) {
+    background: #256a41;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .disabledBtn {
@@ -83,31 +112,27 @@
     cursor: not-allowed;
 }
 
-.disabledBtn:hover {
-    background: #1a3a18;
-}
-
 .forgetPasswordContainer {
     text-align: right;
-    margin: 15px 0;
+    margin: 20px 0;
 }
 
 .forgetPasswordLink {
-    color: #1a3a18;
+    color: #2c7a4b;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 15px;
     transition: color 0.3s ease;
 }
 
 .forgetPasswordLink:hover {
-    color: #142e12;
+    color: #256a41;
     text-decoration: underline;
 }
 
 .orText {
     text-align: center;
     color: #666;
-    margin: 20px 0;
+    margin: 25px 0;
     position: relative;
     font-size: 14px;
 }
@@ -131,28 +156,30 @@
 }
 
 .googleLoginContainer {
-    margin-bottom: 20px;
+    margin: 25px 0;
 }
 
 .googleBtn {
     width: 100%;
-    padding: 12px;
+    padding: 15px;
     background: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
 }
 
 .googleBtn:hover {
     background: #f8f8f8;
-    border-color: #d0d0d0;
+    border-color: #2c7a4b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .googleLoading {
@@ -165,18 +192,19 @@
 .signupLink {
     text-align: center;
     color: #666;
-    font-size: 14px;
-    margin: 0;
+    font-size: 15px;
+    margin-top: 20px;
 }
 
 .signupLink a {
-    color: #1a3a18;
+    color: #2c7a4b;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
+    margin-left: 5px;
 }
 
 .signupLink a:hover {
-    color: #142e12;
+    color: #256a41;
     text-decoration: underline;
 }
