@@ -7,8 +7,12 @@ export default function Logout() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    // Clear all authentication data
     localStorage.removeItem("token");
-    navigate("/");
+    localStorage.clear();  // Clear any other auth-related data
+
+    // Force navigation to login page
+    window.location.href = "/login";
   };
 
   return (

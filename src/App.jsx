@@ -21,39 +21,32 @@ import AddPlant from "./Components/Add-plant/Add-plant";
 const clientId = "216879394932-cg3plgmhph894rsls1ruarb4r4uh47dp.apps.googleusercontent.com";
 
 const router = createBrowserRouter([
-    // Auth routes (without Layout)
-    { path: "/", element: <Login /> },
-    { path: "login", element: <Login /> },
-    { path: "register", element: <Register /> },
-    { path: "forgot-password", element: <Forgotpassword /> },
-    { path: "verifycode", element: <VerifyCode /> },
-    { path: "resetpassword", element: <Resetpassword /> },
-    { path: "verify-email", element: <VerifyEmail /> },
-
-    // Protected routes (with Layout)
     {
         path: "/",
-        element: <Layout />,
         children: [
+            // Public routes
+            { index: true, element: <Login /> },
+            { path: "login", element: <Login /> },
+            { path: "register", element: <Register /> },
+            { path: "forgot-password", element: <Forgotpassword /> },
+            { path: "verifycode", element: <VerifyCode /> },
+            { path: "resetpassword", element: <Resetpassword /> },
+            { path: "verify-email", element: <VerifyEmail /> },
+
+            // Protected routes
             {
                 path: "dashboard",
-                element: <ProtectedRoute element={<Dashboard />} />,
+                element: <Layout />,
+                children: [
+                    { index: true, element: <ProtectedRoute element={<Dashboard />} /> },
+                    { path: "settings", element: <ProtectedRoute element={<Settings />} /> },
+                    { path: "plant", element: <ProtectedRoute element={<PlantPage />} /> },
+                    { path: "add-plant", element: <ProtectedRoute element={<AddPlant />} /> },
+                ]
             },
-            {
-                path: "settings",
-                element: <ProtectedRoute element={<Settings />} />,
-            },
-            {
-                path: "plant",
-                element: <ProtectedRoute element={<PlantPage />} />,
-            },
-            {
-                path: "add-plant",
-                element: <ProtectedRoute element={<AddPlant />} />,
-            },
-        ],
+        ]
     },
-    { path: "*", element: <Notfound /> },
+    { path: "*", element: <Notfound /> }
 ]);
 
 function App() {
