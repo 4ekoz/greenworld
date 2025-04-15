@@ -40,7 +40,7 @@ export default function Login({ onClose, isModal = false }) {
                     if (isModal && onClose) {
                         setTimeout(onClose, 1500);
                     } else {
-                        setTimeout(() => navigate("/"), 1500);
+                        setTimeout(() => navigate("/dashboard"), 1500);
                     }
                 } else {
                     toast.error(response.data.message || "Invalid credentials");
