@@ -22,141 +22,17 @@
 
 .verify-code-container button {
   width: 100%;
-  padding: 12px 25px;
-  /* تعديل الـ padding عشان يكون أكبر شوية */
-  background-color: #386641;
-  /* تغيير لون الخلفية للأخضر الغامق */
+  padding: 12px 25px; /* تعديل الـ padding عشان يكون أكبر شوية */
+  background-color: #386641; /* تغيير لون الخلفية للأخضر الغامق */
   color: white;
   border: none;
-  border-radius: 8px;
-  /* تعديل الـ border-radius عشان يكون أكبر شوية */
-  font-size: 16px;
-  /* إضافة حجم الخط */
+  border-radius: 8px; /* تعديل الـ border-radius عشان يكون أكبر شوية */
+  font-size: 16px; /* إضافة حجم الخط */
   cursor: pointer;
-  max-width: 300px;
-  /* إضافة أقصى عرض للزر */
-  margin: 20px auto;
-  /* إضافة هامش وتوسيط الزر */
+  max-width: 300px; /* إضافة أقصى عرض للزر */
+  margin: 20px auto; /* إضافة هامش وتوسيط الزر */
 }
 
 .verify-code-container button:hover {
-  background-color: #2E8B57;
-  /* تغيير لون الخلفية عند الوقوف على الزر */
-}
-
-.card {
-  background: rgba(0, 0, 0, 0.4) !important;
-  padding: 40px !important;
-  border-radius: 15px !important;
-  box-shadow: 0 0 30px rgba(76, 255, 0, 0.3),
-    inset 0 0 20px rgba(76, 255, 0, 0.1) !important;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(76, 255, 0, 0.2) !important;
-  animation: glowPulse 3s ease-in-out infinite;
-}
-
-@keyframes glowPulse {
-
-  0%,
-  100% {
-    box-shadow: 0 0 30px rgba(76, 255, 0, 0.3),
-      inset 0 0 20px rgba(76, 255, 0, 0.1);
-  }
-
-  50% {
-    box-shadow: 0 0 40px rgba(76, 255, 0, 0.4),
-      inset 0 0 30px rgba(76, 255, 0, 0.2);
-  }
-}
-
-h3 {
-  color: #4cff00 !important;
-  text-shadow: 0 0 15px rgba(76, 255, 0, 0.5);
-  font-size: 28px;
-  margin-bottom: 20px;
-  text-align: center;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-p {
-  color: rgba(255, 255, 255, 0.8) !important;
-}
-
-.form-control {
-  background: rgba(0, 0, 0, 0.3) !important;
-  border: 1px solid rgba(76, 255, 0, 0.2) !important;
-  color: #4cff00 !important;
-  text-shadow: 0 0 5px rgba(76, 255, 0, 0.3);
-  font-weight: bold;
-  transition: all 0.3s ease !important;
-}
-
-.form-control:focus {
-  border-color: #4cff00 !important;
-  background-color: rgba(0, 0, 0, 0.5) !important;
-  box-shadow: 0 0 0 3px rgba(76, 255, 0, 0.1) !important;
-}
-
-.btn-success {
-  background: rgba(76, 255, 0, 0.15) !important;
-  color: #4cff00 !important;
-  border: 1px solid rgba(76, 255, 0, 0.3) !important;
-  font-weight: 600;
-  text-shadow: 0 0 5px rgba(76, 255, 0, 0.3);
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease !important;
-}
-
-.btn-success:hover:not(:disabled) {
-  background: rgba(76, 255, 0, 0.25) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 0 20px rgba(76, 255, 0, 0.4) !important;
-}
-
-.btn-success:before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: rgba(76, 255, 0, 0.1);
-  transform: rotate(45deg);
-  animation: buttonGlow 3s linear infinite;
-}
-
-@keyframes buttonGlow {
-  0% {
-    transform: rotate(45deg) translateX(-100%);
-  }
-
-  100% {
-    transform: rotate(45deg) translateX(100%);
-  }
-}
-
-.text-success {
-  color: #4cff00 !important;
-  text-shadow: 0 0 5px rgba(76, 255, 0, 0.3);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.text-success:hover {
-  color: #66ff33 !important;
-  text-shadow: 0 0 10px rgba(76, 255, 0, 0.5);
-}
-
-.alert-success {
-  background: rgba(76, 255, 0, 0.15) !important;
-  border: 1px solid rgba(76, 255, 0, 0.3) !important;
-  color: #4cff00 !important;
-  text-shadow: 0 0 5px rgba(76, 255, 0, 0.3);
-}
-
-.text-danger {
-  color: #ff4444 !important;
-  text-shadow: 0 0 5px rgba(255, 68, 68, 0.3);
+  background-color: #2E8B57; /* تغيير لون الخلفية عند الوقوف على الزر */
 }
