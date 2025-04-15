@@ -234,3 +234,97 @@
     font-weight: 600;
     margin: 0;
 }
+
+/* Mobile Menu Button */
+.menuButton {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background: none;
+    border: none;
+    color: #0C1D0E;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .menuButton {
+        display: block;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+        width: 80%;
+        max-width: 300px;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .mainContent {
+        margin-left: 0;
+        padding: 20px;
+        padding-top: 80px;
+    }
+
+    .menuItem {
+        padding: 15px;
+    }
+
+    .icon {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* Tablet Design */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .mainContent {
+        margin-left: 200px;
+        padding: 25px;
+    }
+
+    .menuItem {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Large Desktop */
+@media (min-width: 1440px) {
+    .sidebar {
+        width: 280px;
+    }
+
+    .mainContent {
+        margin-left: 280px;
+        padding: 40px;
+    }
+
+    .menuItem {
+        padding: 15px 20px;
+        font-size: 16px;
+    }
+
+    .icon {
+        width: 28px;
+        height: 28px;
+    }
+}

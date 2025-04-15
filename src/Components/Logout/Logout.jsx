@@ -1,34 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./Logout.module.css";
 import { FaSignOutAlt } from "react-icons/fa";
-import Login from "../Login/Login";
+import { useNavigate } from "react-router-dom";
 
 export default function Logout() {
-  const [showLoginModal, setShowLoginModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("userToken");
-    setShowLoginModal(true);
-  };
-
-  const handleCloseModal = () => {
-    window.location.reload();
+    localStorage.removeItem("token");
+    navigate("/");
   };
 
   return (
-    <>
-      <div className={styles.logoutContainer}>
-        <button onClick={handleLogout} className={styles.logoutButton}>
-          <FaSignOutAlt className={styles.logoutIcon} />
-          Logout
-        </button>
-      </div>
-
-      {showLoginModal && (
-        <div className={styles.modalOverlay}>
-          <Login onClose={handleCloseModal} isModal={true} />
-        </div>
-      )}
-    </>
+    <div className={styles.logoutContainer}>
+      <button onClick={handleLogout} className={styles.logoutButton}>
+        <FaSignOutAlt className={styles.logoutIcon} />
+        Logout
+      </button>
+    </div>
   );
 }

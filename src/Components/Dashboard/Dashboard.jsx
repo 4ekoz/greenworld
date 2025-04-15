@@ -6,11 +6,23 @@ import settingsIcon from './Settings (1).png';
 import Logout from '../Logout/Logout';
 import plant from "../Dashboard/plant.png";
 import addPlantIcon from "../Add-plant/Addplanticon.png";
-
-
+import { motion } from 'framer-motion';
 
 export default function Dashboard() {
   const location = useLocation();
+
+  const menuItemVariants = {
+    hidden: { x: -50, opacity: 0 },
+    visible: (i) => ({
+      x: 0,
+      opacity: 1,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    })
+  };
 
   const isActive = (path) => {
     if (path === '/dashboard' && location.pathname === '/dashboard') return true;
@@ -30,45 +42,85 @@ export default function Dashboard() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.sidebar}>
+      <motion.div
+        className={styles.sidebar}
+        initial={{ x: -250 }}
+        animate={{ x: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <div className={styles.sidebarContent}>
-          <Link
-            to="/dashboard"
-            className={`${styles.menuItem} ${isActive('/dashboard') ? styles.active : ''}`}
+          <motion.div
+            custom={0}
+            variants={menuItemVariants}
+            initial="hidden"
+            animate="visible"
           >
-            <img src={dashboardHome} alt="Dashboard" className={styles.icon} />
-            <span>Dashboard</span>
-          </Link>
+            <Link
+              to="/dashboard"
+              className={`${styles.menuItem} ${isActive('/dashboard') ? styles.active : ''}`}
+            >
+              <img src={dashboardHome} alt="Dashboard" className={styles.icon} />
+              <span>Dashboard</span>
+            </Link>
+          </motion.div>
 
-          <Link
-            to="/dashboard/plant"
-            className={`${styles.menuItem} ${isActive('/dashboard/plant') ? styles.active : ''}`}
+          <motion.div
+            custom={1}
+            variants={menuItemVariants}
+            initial="hidden"
+            animate="visible"
           >
-            <img src={plant} alt="Plant" className={styles.icon} />
-            <span>Plant</span>
-          </Link>
+            <Link
+              to="/dashboard/plant"
+              className={`${styles.menuItem} ${isActive('/dashboard/plant') ? styles.active : ''}`}
+            >
+              <img src={plant} alt="Plant" className={styles.icon} />
+              <span>Plant</span>
+            </Link>
+          </motion.div>
 
-          <Link
-            to="/dashboard/add-plant"
-            className={`${styles.menuItem} ${isActive('/dashboard/add-plant') ? styles.active : ''}`}
+          <motion.div
+            custom={2}
+            variants={menuItemVariants}
+            initial="hidden"
+            animate="visible"
           >
-            <img src={addPlantIcon} alt="Add Plant" className={styles.icon} />
-            <span>Add plant</span>
-          </Link>
+            <Link
+              to="/dashboard/add-plant"
+              className={`${styles.menuItem} ${isActive('/dashboard/add-plant') ? styles.active : ''}`}
+            >
+              <img src={addPlantIcon} alt="Add Plant" className={styles.icon} />
+              <span>Add plant</span>
+            </Link>
+          </motion.div>
 
           <div className={styles.bottomMenu}>
-            <Link
-              to="/dashboard/settings"
-              className={`${styles.menuItem} ${isActive('/dashboard/settings') ? styles.active : ''}`}
+            <motion.div
+              custom={3}
+              variants={menuItemVariants}
+              initial="hidden"
+              animate="visible"
             >
-              <img src={settingsIcon} alt="Settings" className={styles.icon} />
-              <span>Settings</span>
-            </Link>
+              <Link
+                to="/dashboard/settings"
+                className={`${styles.menuItem} ${isActive('/dashboard/settings') ? styles.active : ''}`}
+              >
+                <img src={settingsIcon} alt="Settings" className={styles.icon} />
+                <span>Settings</span>
+              </Link>
+            </motion.div>
 
-            <Logout />
+            <motion.div
+              custom={4}
+              variants={menuItemVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <Logout />
+            </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <div className={styles.mainContent}>
         <div className={styles.content}>
