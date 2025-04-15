@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import resetpassword from "../Resetpassword/Resetpassword.png";
 import resetpasswordabove from "../Resetpassword/Reset Password above (1).png";
+import AuthBackground from '../Background/Background';
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -73,68 +74,70 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="reset-password-container">
-      <motion.div
-        className="card p-4 shadow-lg"
-        style={{ maxWidth: "500px", width: "90%", borderRadius: "15px" }}
-        initial={{ opacity: 0, scale: 0.5, rotate: 180 }}
-        animate={{ opacity: 1, scale: 1, rotate: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
-        <h2>Reset Password</h2>
-        <p className="subtitle">Please type something you will remember.</p>
+    <AuthBackground>
+      <div className="reset-password-container">
+        <motion.div
+          className="card p-4 shadow-lg"
+          style={{ maxWidth: "500px", width: "90%", borderRadius: "15px" }}
+          initial={{ opacity: 0, scale: 0.5, rotate: 180 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <h2>Reset Password</h2>
+          <p className="subtitle">Please type something you will remember.</p>
 
-        <form onSubmit={handleSubmit} className="reset-password-form">
-          {/* Password Field */}
-          <div className="input-wrapper">
-            <label htmlFor="password">Create your password</label>
-            <div className="password-wrapper">
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
-                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-              </span>
+          <form onSubmit={handleSubmit} className="reset-password-form">
+            {/* Password Field */}
+            <div className="input-wrapper">
+              <label htmlFor="password">Create your password</label>
+              <div className="password-wrapper">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                </span>
+              </div>
             </div>
-          </div>
 
-          {/* Confirm Password Field */}
-          <div className="input-wrapper">
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <div className="password-wrapper">
-              <input
-                type={showPassword ? "text" : "password"}
-                id="confirmPassword"
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
-              <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
-                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-              </span>
+            {/* Confirm Password Field */}
+            <div className="input-wrapper">
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <div className="password-wrapper">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+                <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                </span>
+              </div>
             </div>
-          </div>
 
-          {/* Error Message */}
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
+            {/* Error Message */}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-          {/* Reset Button */}
-          <button
-            type="submit"
-            className="reset-button-image"
-            disabled={loading}
-          >
-            {loading ? "Resetting..." : "Reset Password"}
-          </button>
-        </form>
-      </motion.div>
-    </div>
+            {/* Reset Button */}
+            <button
+              type="submit"
+              className="reset-button-image"
+              disabled={loading}
+            >
+              {loading ? "Resetting..." : "Reset Password"}
+            </button>
+          </form>
+        </motion.div>
+      </div>
+    </AuthBackground>
   );
 };
 

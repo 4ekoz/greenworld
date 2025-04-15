@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Background from "./Components/Background/Background";
 
 // Importing components
 import Layout from "./Components/Layout/Layout";
@@ -52,6 +53,7 @@ const router = createBrowserRouter([
 function App() {
     return (
         <GoogleOAuthProvider clientId={clientId}>
+            <Background />
             <RouterProvider router={router} />
         </GoogleOAuthProvider>
     );

@@ -10,8 +10,9 @@ import { FaEye, FaEyeSlash, FaEnvelope, FaUser } from "react-icons/fa";
 import { Spinner } from "react-bootstrap";
 import { FcGoogle } from "react-icons/fc";
 import "./Register.css";
+import AuthBackground from '../Background/Background';
 
-export default function Register() {
+const Register = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
@@ -88,52 +89,56 @@ export default function Register() {
   };
 
   return (
-    <div className="register-container">
-      <motion.div className="register-box" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, ease: "easeOut" }}>
-        <h2>Create Account</h2>
-        <p>create an account so you can explore all the existing posts</p>
-        <form onSubmit={formik.handleSubmit}>
-          {/* Username Field */}
-          <div className="input-group">
-            <input type="text" placeholder="Username" name="userName" maxLength={10} onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.userName} />
-            <FaUser className="icon" />
-          </div>
-          {formik.touched.userName && formik.errors.userName && <p className="error-text">{formik.errors.userName}</p>}
+    <AuthBackground>
+      <div className="register-container">
+        <motion.div className="register-box" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, ease: "easeOut" }}>
+          <h2>Create Account</h2>
+          <p>create an account so you can explore all the existing posts</p>
+          <form onSubmit={formik.handleSubmit}>
+            {/* Username Field */}
+            <div className="input-group">
+              <input type="text" placeholder="Username" name="userName" maxLength={10} onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.userName} />
+              <FaUser className="icon" />
+            </div>
+            {formik.touched.userName && formik.errors.userName && <p className="error-text">{formik.errors.userName}</p>}
 
-          {/* Email Field */}
-          <div className="input-group">
-            <input type="text" placeholder="Email" name="email" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.email} />
-            <FaEnvelope className="icon" />
-          </div>
-          {formik.touched.email && formik.errors.email && <p className="error-text">{formik.errors.email}</p>}
+            {/* Email Field */}
+            <div className="input-group">
+              <input type="text" placeholder="Email" name="email" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.email} />
+              <FaEnvelope className="icon" />
+            </div>
+            {formik.touched.email && formik.errors.email && <p className="error-text">{formik.errors.email}</p>}
 
-          {/* Password Field */}
-          <div className="input-group">
-            <input type={showPassword ? "text" : "password"} placeholder="Password" name="password" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.password} />
-            <span className="icon" onClick={() => setShowPassword(!showPassword)}>{showPassword ? <FaEyeSlash /> : <FaEye />}</span>
-          </div>
-          {formik.touched.password && formik.errors.password && <p className="error-text">{formik.errors.password}</p>}
+            {/* Password Field */}
+            <div className="input-group">
+              <input type={showPassword ? "text" : "password"} placeholder="Password" name="password" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.password} />
+              <span className="icon" onClick={() => setShowPassword(!showPassword)}>{showPassword ? <FaEyeSlash /> : <FaEye />}</span>
+            </div>
+            {formik.touched.password && formik.errors.password && <p className="error-text">{formik.errors.password}</p>}
 
-          {/* Sign Up Button */}
-          <button type="submit" className="register-btn" disabled={!(formik.isValid && formik.dirty) || loading}>
-            {loading ? <Spinner animation="border" size="sm" /> : "Sign_Up"}
-          </button>
-
-          {/* Google Login Button */}
-          <div className="or-continue-with">or continue with</div>
-          <div className="google-login-container">
-            <button className="google-btn" onClick={handleGoogleSignup}>
-              <FcGoogle size={20} />
-              Sign up with Google
+            {/* Sign Up Button */}
+            <button type="submit" className="register-btn" disabled={!(formik.isValid && formik.dirty) || loading}>
+              {loading ? <Spinner animation="border" size="sm" /> : "Sign_Up"}
             </button>
-            {googleLoading && <div className="google-loading">Loading...</div>}
-          </div>
 
-          {/* Already have an account link */}
-          <p className="signup-link">Already have an account? <Link to="/login">Login</Link></p>
-        </form>
-      </motion.div>
-      <ToastContainer position="top-right" autoClose={3000} />
-    </div>
+            {/* Google Login Button */}
+            <div className="or-continue-with">or continue with</div>
+            <div className="google-login-container">
+              <button className="google-btn" onClick={handleGoogleSignup}>
+                <FcGoogle size={20} />
+                Sign up with Google
+              </button>
+              {googleLoading && <div className="google-loading">Loading...</div>}
+            </div>
+
+            {/* Already have an account link */}
+            <p className="signup-link">Already have an account? <Link to="/login">Login</Link></p>
+          </form>
+        </motion.div>
+        <ToastContainer position="top-right" autoClose={3000} />
+      </div>
+    </AuthBackground>
   );
-}
+};
+
+export default Register;

@@ -1,0 +1,128 @@
+.backgroundContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: linear-gradient(135deg,
+            rgba(44, 122, 75, 0.1) 0%,
+            rgba(76, 175, 80, 0.2) 100%);
+    overflow: hidden;
+}
+
+.backgroundPattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(circle at 25px 25px, rgba(255, 255, 255, 0.2) 2%, transparent 0%),
+        radial-gradient(circle at 75px 75px, rgba(255, 255, 255, 0.2) 2%, transparent 0%);
+    background-size: 100px 100px;
+    animation: patternMove 60s linear infinite;
+}
+
+.leafPattern {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(circle at center, rgba(44, 122, 75, 0.1) 0%, transparent 70%);
+    background-size: 400px 400px;
+    animation: leafFloat 30s ease-in-out infinite;
+}
+
+@keyframes patternMove {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 100px 100px;
+    }
+}
+
+@keyframes leafFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(20px) rotate(5deg);
+    }
+}
+
+.authWrapper {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.authBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-color: #000000;
+    overflow: hidden;
+}
+
+.authBackground::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle at center,
+            rgba(76, 255, 0, 0.3) 0%,
+            rgba(76, 255, 0, 0.1) 40%,
+            rgba(0, 0, 0, 0) 70%);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+.authBackground::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle at center,
+            transparent 0%,
+            rgba(0, 0, 0, 0.8) 100%),
+        url('../Login/earth.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.5;
+    mix-blend-mode: screen;
+}
+
+.authContainer {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+}
