@@ -2,10 +2,12 @@ import React from 'react';
 import { Link, useLocation, Outlet } from 'react-router-dom';
 import styles from './Dashboard.module.css';
 import dashboardHome from './dashboardhome.png';
-import updateIcon from './update.png';
 import settingsIcon from './Settings (1).png';
 import Logout from '../Logout/Logout';
-import plant from "../Dashboard/plant.png"; // This is the plant icon you provided
+import plant from "../Dashboard/plant.png";
+import addPlantIcon from "../Add-plant/Addplanticon.png";
+
+
 
 export default function Dashboard() {
   const location = useLocation();
@@ -39,20 +41,19 @@ export default function Dashboard() {
           </Link>
 
           <Link
-            to="/update"
-            className={`${styles.menuItem} ${isActive('/update') ? styles.active : ''}`}
-          >
-            <img src={updateIcon} alt="Update" className={styles.icon} />
-            <span>Update</span>
-          </Link>
-
-          {/* Replace "Weather" with "Plant" */}
-          <Link
             to="/plant"
             className={`${styles.menuItem} ${isActive('/plant') ? styles.active : ''}`}
           >
-            <img src={plant} alt="Plant" className={styles.icon} /> {/* Use the plant icon */}
+            <img src={plant} alt="Plant" className={styles.icon} />
             <span>Plant</span>
+          </Link>
+
+          <Link
+            to="/add-plant"
+            className={`${styles.menuItem} ${isActive('/add-plant') ? styles.active : ''}`}
+          >
+            <img src={addPlantIcon} alt="Add Plant" className={styles.icon} />
+            <span>Add plant</span>
           </Link>
 
           <div className={styles.bottomMenu}>

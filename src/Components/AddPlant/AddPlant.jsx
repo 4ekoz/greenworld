@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import styles from './Update.module.css';
+import styles from './AddPlant.module.css';
 
-export default function Update() {
+export default function AddPlant() {
     const [uploadedImage, setUploadedImage] = useState(null);
     const inputRef = useRef(null);
 
@@ -29,7 +29,7 @@ export default function Update() {
 
     return (
         <div className={styles.updateContent}>
-            <h1>Update Your Plant</h1>
+            <h1>Add New Plant</h1>
 
             <div className={styles.formSection}>
                 <div className={styles.inputRow}>
