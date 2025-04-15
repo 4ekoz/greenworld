@@ -7,12 +7,11 @@ export default function Logout() {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("userToken");
     setShowLoginModal(true);
   };
 
   const handleCloseModal = () => {
-    setShowLoginModal(false);
     window.location.reload();
   };
 

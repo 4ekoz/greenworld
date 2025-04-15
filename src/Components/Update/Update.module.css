@@ -1,0 +1,86 @@
+.updateContent {
+    padding: 30px;
+    width: 100%;
+}
+
+.updateContent h1 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.formSection {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.inputRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.formGroup:last-child {
+    margin-bottom: 0;
+}
+
+.formGroup label {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.formGroup input {
+    height: 45px;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.formGroup input:focus {
+    border-color: #4CAF50;
+}
+
+.formGroup input::placeholder {
+    color: #999;
+}
+
+.uploadArea {
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.uploadArea:hover {
+    border-color: #4CAF50;
+}
+
+.uploadButton {
+    width: 100%;
+    min-height: 150px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #666;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}

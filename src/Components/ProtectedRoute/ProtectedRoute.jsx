@@ -1,12 +1,12 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
 import Login from '../Login/Login';
 
 const ProtectedRoute = ({ children }) => {
-    const token = localStorage.getItem('token');
+    // Check if user is logged in by looking for the token in localStorage
+    const token = localStorage.getItem('userToken');
     const [showLoginModal, setShowLoginModal] = React.useState(!token);
 
-    if (!token) {
+    if (!token || showLoginModal) {
         return (
             <div style={{
                 position: 'fixed',
@@ -14,16 +14,18 @@ const ProtectedRoute = ({ children }) => {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                backgroundColor: '#1a3a18',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                zIndex: 1000
             }}>
                 <Login isModal={true} onClose={() => setShowLoginModal(false)} />
             </div>
         );
     }
 
+    // If there is a token, render the protected component
     return children;
 };
 
