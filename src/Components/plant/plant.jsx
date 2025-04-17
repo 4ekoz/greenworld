@@ -35,22 +35,22 @@ const Plant = () => {
     fetchPlants();
   }, []);
 
-    const fetchPlants = async () => {
-      try {
-        const token = localStorage.getItem('token');
+  const fetchPlants = async () => {
+    try {
+      const token = localStorage.getItem('token');
       console.log('=== Token Validation ===');
       console.log('Current token in localStorage:', token);
       console.log('Token length:', token?.length);
       console.log('======================');
 
-        if (!token) {
+      if (!token) {
         setError('يرجى تسجيل الدخول أولاً');
-          return;
-        }
+        return;
+      }
 
       // تجهيز الكونفيج بنفس شكل التوكن اللي في صورة الـ login
       const config = {
-          headers: {
+        headers: {
           'token': `${token}`  // نتأكد إن التوكن بيتبعت كاسترينج
         }
       };
@@ -67,7 +67,7 @@ const Plant = () => {
         setPlants([]);
         setError('لم يتم العثور على نباتات');
       }
-      } catch (err) {
+    } catch (err) {
       console.error('=== Fetch Plants Error ===');
       console.error('Error details:', {
         status: err.response?.status,
@@ -166,7 +166,7 @@ const Plant = () => {
         image: null,
         description: '',
       });
-    fetchPlants();
+      fetchPlants();
     } catch (err) {
       console.error('=== Error Information ===');
       console.error('1. Full error object:', err);
@@ -183,7 +183,7 @@ const Plant = () => {
   return (
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
-      <h1>Plant List</h1>
+        <h1>Plant List</h1>
         <button
           className="btn btn-success"
           onClick={() => setShowAddForm(!showAddForm)}
@@ -322,49 +322,49 @@ const Plant = () => {
       {plants.length > 0 ? (
         <div className="table-responsive">
           <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Scientific Name</th>
-              <th>Category</th>
-              <th>Origin</th>
-              <th>Watering Frequency</th>
-              <th>Soil Type</th>
-              <th>Temp (Max)</th>
-              <th>Temp (Min)</th>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Scientific Name</th>
+                <th>Category</th>
+                <th>Origin</th>
+                <th>Watering Frequency</th>
+                <th>Soil Type</th>
+                <th>Temp (Max)</th>
+                <th>Temp (Min)</th>
                 <th>Image</th>
-              <th>Description</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {plants.map((plant) => (
-              <tr key={plant.id}>
-                <td>{plant.name}</td>
-                <td>{plant.scientificName}</td>
-                <td>{plant.category}</td>
-                <td>{plant.origin}</td>
-                <td>{plant.wateringFrequency}</td>
-                <td>{plant.soilType}</td>
-                <td>{plant.temperatureRange.max}</td>
-                <td>{plant.temperatureRange.min}</td>
-                <td>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {plants.map((plant) => (
+                <tr key={plant.id}>
+                  <td>{plant.name}</td>
+                  <td>{plant.scientificName}</td>
+                  <td>{plant.category}</td>
+                  <td>{plant.origin}</td>
+                  <td>{plant.wateringFrequency}</td>
+                  <td>{plant.soilType}</td>
+                  <td>{plant.temperatureRange.max}</td>
+                  <td>{plant.temperatureRange.min}</td>
+                  <td>
                     <img
                       src={plant.image}
                       alt={plant.name}
                       style={{ width: '50px', height: '50px', objectFit: 'cover' }}
                     />
-                </td>
-                <td>{plant.description}</td>
-                <td>
+                  </td>
+                  <td>{plant.description}</td>
+                  <td>
                     <span className={`badge ${plant.status === 'active' ? 'bg-success' : 'bg-danger'}`}>
                       {plant.status === 'active' ? 'Active' : 'Inactive'}
                     </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       ) : (
         <p>No plants found.</p>

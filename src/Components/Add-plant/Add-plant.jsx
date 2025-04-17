@@ -5,6 +5,7 @@ import styles from './Add-plant.module.css';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { motion } from 'framer-motion';
 
 // إضافة الثوابت
 export const wateringFrequencies = {
@@ -38,18 +39,18 @@ export default function AddPlant() {
     const [showSuccessIcon, setShowSuccessIcon] = useState(false);
     const [showErrorIcon, setShowErrorIcon] = useState(false);
 
-    // بيانات تجريبية تطابق تماماً ما في Postman
+    // تهيئة النموذج بقيم فارغة
     const [formData, setFormData] = useState({
-        name: 'Snake Plant',
-        scientificName: 'Sansevieria trifasciata',
-        category: 'air-purifying',
-        origin: 'West Afric',
-        description: 'An indoor plant known for purifying air and low maintenance.',
-        wateringFrequency: 'biweekly',
-        soilType: 'loamy',
+        name: '',
+        scientificName: '',
+        category: '',
+        origin: '',
+        description: '',
+        wateringFrequency: '',
+        soilType: '',
         temperatureRange: {
-            min: '15',
-            max: '30'
+            min: '',
+            max: ''
         },
         image: null
     });
@@ -92,17 +93,14 @@ export default function AddPlant() {
         setShowErrorIcon(false);
 
         try {
-            // Create form data in the same format as Postman
             const submitData = new FormData();
 
-            // Add fields in the same order as the curl command, but with user's input
             submitData.append('name', formData.name);
             submitData.append('scientificName', formData.scientificName);
             submitData.append('category', formData.category);
             submitData.append('origin', formData.origin);
             submitData.append('description', formData.description);
 
-            // Handle Image file with capital I as in Postman
             if (formData.image) {
                 submitData.append('Image', formData.image);
             }
@@ -112,17 +110,10 @@ export default function AddPlant() {
             submitData.append('temperatureRange[min]', formData.temperatureRange.min);
             submitData.append('temperatureRange[max]', formData.temperatureRange.max);
 
-            // Log the data being sent
-            console.log('Sending data in Postman format:');
-            for (let [key, value] of submitData.entries()) {
-                if (key === 'Image') {
-                    console.log('Image:', value.name);
-                } else {
-                    console.log(`${key}:`, value);
-                }
+            const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error('No token found');
             }
-
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNocmVlZmFzaHJhZjEzNEBnbWFpbC5jb20iLCJfaWQiOiI2N2RjOGZhYjI3MDNkYzdkZGJlMWEwYTEiLCJpYXQiOjE3NDQ4OTcwNzJ9.xppKTK4AFUnOUnF4B0cW9rHpWjYKXWbpSRvO-w1-3P0';
 
             const config = {
                 headers: {
@@ -137,29 +128,24 @@ export default function AddPlant() {
                 config
             );
 
-            console.log('API Response:', response.data);
-
             if (response.data.success === true) {
                 setShowSuccessIcon(true);
                 toast.success('Plant created successfully!', {
-                    icon: <FontAwesomeIcon icon={faCheck} className="text-success" />
+                    icon: <FontAwesomeIcon icon={faCheck} className="text-success" />,
+                    position: "top-center",
+                    autoClose: 3000
                 });
+
+                // زيادة وقت التأخير قبل الانتقال
                 setTimeout(() => {
-                    navigate('/plant');
-                }, 1500);
+                    navigate('/dashboard/plant');
+                }, 3000);
             } else {
                 throw new Error(response.data.message || 'Failed to add plant');
             }
         } catch (error) {
             setShowErrorIcon(true);
-            console.error('Error Details:', {
-                message: error.message,
-                response: error.response?.data,
-                status: error.response?.status,
-                headers: error.response?.headers,
-                config: error.config,
-                fullError: error
-            });
+            console.error('Error Details:', error);
 
             if (error.response?.data?.message === 'plant already exist') {
                 toast.error('Plant already exists!', {
@@ -176,12 +162,34 @@ export default function AddPlant() {
     };
 
     return (
-        <div className={styles.updateContent}>
+        <motion.div
+            className={styles.updateContent}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+        >
             <h1>Add Your Plant</h1>
             {showSuccessIcon && (
-                <div className={styles.iconContainer}>
-                    <FontAwesomeIcon icon={faCheck} className={styles.successIcon} />
-                </div>
+                <motion.div
+                    className={styles.successIconContainer}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{
+                        type: "spring",
+                        stiffness: 260,
+                        damping: 20
+                    }}
+                >
+                    <motion.div
+                        className={styles.successIcon}
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, delay: 0.2 }}
+                    >
+                        <FontAwesomeIcon icon={faCheck} />
+                        <span className={styles.successText}>Plant created successfully!</span>
+                    </motion.div>
+                </motion.div>
             )}
             {showErrorIcon && (
                 <div className={styles.iconContainer}>
@@ -294,17 +302,6 @@ export default function AddPlant() {
 
                 <div className={styles.inputRow}>
                     <div className={styles.formGroup}>
-                        <label>Temperature Range (Min °C)</label>
-                        <input
-                            type="number"
-                            name="temperatureRange.min"
-                            value={formData.temperatureRange.min}
-                            onChange={handleInputChange}
-                            placeholder="Enter minimum temperature"
-                            required
-                        />
-                    </div>
-                    <div className={styles.formGroup}>
                         <label>Temperature Range (Max °C)</label>
                         <input
                             type="number"
@@ -312,6 +309,17 @@ export default function AddPlant() {
                             value={formData.temperatureRange.max}
                             onChange={handleInputChange}
                             placeholder="Enter maximum temperature"
+                            required
+                        />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label>Temperature Range (Min °C)</label>
+                        <input
+                            type="number"
+                            name="temperatureRange.min"
+                            value={formData.temperatureRange.min}
+                            onChange={handleInputChange}
+                            placeholder="Enter minimum temperature"
                             required
                         />
                     </div>
@@ -333,14 +341,16 @@ export default function AddPlant() {
                     </div>
                 </div>
 
-                <button
+                <motion.button
                     type="submit"
                     className={styles.submitButton}
                     disabled={loading}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                 >
                     {loading ? 'Adding Plant...' : 'Add Plant'}
-                </button>
+                </motion.button>
             </form>
-        </div>
+        </motion.div>
     );
 } 

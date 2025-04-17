@@ -71,11 +71,11 @@ export default function Dashboard() {
             animate="visible"
           >
             <Link
-              to="/dashboard/plant"
-              className={`${styles.menuItem} ${isActive('/dashboard/plant') ? styles.active : ''}`}
+              to="/dashboard/add-plant"
+              className={`${styles.menuItem} ${isActive('/dashboard/add-plant') ? styles.active : ''}`}
             >
-              <img src={plant} alt="Plant" className={styles.icon} />
-              <span>Plant</span>
+              <img src={addPlantIcon} alt="Add Plant" className={styles.icon} />
+              <span>Add plant</span>
             </Link>
           </motion.div>
 
@@ -86,11 +86,11 @@ export default function Dashboard() {
             animate="visible"
           >
             <Link
-              to="/dashboard/add-plant"
-              className={`${styles.menuItem} ${isActive('/dashboard/add-plant') ? styles.active : ''}`}
+              to="/dashboard/plant"
+              className={`${styles.menuItem} ${isActive('/dashboard/plant') ? styles.active : ''}`}
             >
-              <img src={addPlantIcon} alt="Add Plant" className={styles.icon} />
-              <span>Add plant</span>
+              <img src={plant} alt="Plant" className={styles.icon} />
+              <span>Plant</span>
             </Link>
           </motion.div>
 
