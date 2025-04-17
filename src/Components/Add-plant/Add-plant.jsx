@@ -33,7 +33,7 @@ export const soilTypes = {
     CHALKY: "chalky"
 };
 
-export default function AddPlant() {
+const AddPlant = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [showSuccessIcon, setShowSuccessIcon] = useState(false);
@@ -162,52 +162,45 @@ export default function AddPlant() {
     };
 
     return (
-        <motion.div
-            className={styles.updateContent}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-        >
+        <div className={styles.updateContent}>
             <h1>Add Your Plant</h1>
-            {showSuccessIcon && (
-                <motion.div
-                    className={styles.successIconContainer}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{
-                        type: "spring",
-                        stiffness: 260,
-                        damping: 20
-                    }}
-                >
-                    <motion.div
-                        className={styles.successIcon}
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.3, delay: 0.2 }}
-                    >
-                        <FontAwesomeIcon icon={faCheck} />
-                        <span className={styles.successText}>Plant created successfully!</span>
-                    </motion.div>
-                </motion.div>
-            )}
-            {showErrorIcon && (
-                <div className={styles.iconContainer}>
-                    <FontAwesomeIcon icon={faTimes} className={styles.errorIcon} />
-                </div>
-            )}
-
             <form onSubmit={handleSubmit} className={styles.formSection}>
+                {showSuccessIcon && (
+                    <motion.div
+                        className={styles.successIconContainer}
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{
+                            type: "spring",
+                            stiffness: 260,
+                            damping: 20
+                        }}
+                    >
+                        <motion.div
+                            className={styles.successIcon}
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.3, delay: 0.2 }}
+                        >
+                            <FontAwesomeIcon icon={faCheck} />
+                            <span className={styles.successText}>Plant created successfully!</span>
+                        </motion.div>
+                    </motion.div>
+                )}
+                {showErrorIcon && (
+                    <div className={styles.iconContainer}>
+                        <FontAwesomeIcon icon={faTimes} className={styles.errorIcon} />
+                    </div>
+                )}
                 <div className={styles.inputRow}>
                     <div className={styles.formGroup}>
                         <label>Name</label>
                         <input
                             type="text"
                             name="name"
+                            placeholder="Enter Plant Name"
                             value={formData.name}
                             onChange={handleInputChange}
-                            placeholder="Enter Plant Name"
-                            required
                         />
                     </div>
                     <div className={styles.formGroup}>
@@ -215,10 +208,9 @@ export default function AddPlant() {
                         <input
                             type="text"
                             name="scientificName"
+                            placeholder="Enter Scientific Name"
                             value={formData.scientificName}
                             onChange={handleInputChange}
-                            placeholder="Enter Scientific Name"
-                            required
                         />
                     </div>
                 </div>
@@ -351,6 +343,8 @@ export default function AddPlant() {
                     {loading ? 'Adding Plant...' : 'Add Plant'}
                 </motion.button>
             </form>
-        </motion.div>
+        </div>
     );
-} 
+};
+
+export default AddPlant; 

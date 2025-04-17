@@ -1,5 +1,35 @@
 .plantContainer {
-    padding: 20px;
+    padding: 0;
+    max-width: 100%;
+    margin: 0;
+}
+
+.title {
+    color: #2c7a4b;
+    text-align: center;
+    margin: 20px 0;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.emptyContainer {
+    text-align: center;
+    padding: 3rem;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 2rem;
+}
+
+.emptyContainer h2 {
+    color: #4A3728;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.emptyContainer p {
+    color: #666;
+    font-size: 1.1rem;
 }
 
 .plantsGrid {
@@ -7,4 +37,149 @@
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     padding: 20px;
+}
+
+.tableWrapper {
+    overflow-x: auto;
+    background: white;
+    border-radius: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    padding: 10px;
+}
+
+.plantTable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+}
+
+.plantTable th {
+    background: #2c7a4b;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.plantTable td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.plantTable tr:hover {
+    background-color: #f8f9fa;
+}
+
+.plantImage {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.plantImage:hover {
+    transform: scale(2.5);
+    z-index: 2;
+}
+
+.description {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.description:hover {
+    white-space: normal;
+    overflow: visible;
+}
+
+.status {
+    text-align: center;
+}
+
+.statusIcons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.statusIconSuccess {
+    color: #2c7a4b;
+    font-size: 1.2rem;
+}
+
+.statusIconError {
+    color: #dc3545;
+    font-size: 1.2rem;
+}
+
+.loadingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+}
+
+.spinner {
+    color: #2c7a4b;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.errorContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    color: #dc3545;
+    font-size: 1.2rem;
+}
+
+/* تأثيرات الحركة */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.plantTable tbody tr {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* تحسين التجاوب */
+@media (max-width: 1024px) {
+    .plantContainer {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .plantTable td, 
+    .plantTable th {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .description {
+        max-width: 150px;
+    }
 }

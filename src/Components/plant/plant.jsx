@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import styles from './Plant.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { motion } from 'framer-motion';
+import { toast } from 'react-toastify';
+import { FaCheckCircle } from 'react-icons/fa';
+import { Spinner } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 // دالة لتوليد ObjectId صالح
 const generateValidObjectId = () => {
@@ -12,6 +18,7 @@ const generateValidObjectId = () => {
 
 const Plant = () => {
   const [plants, setPlants] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newPlant, setNewPlant] = useState({
@@ -28,56 +35,60 @@ const Plant = () => {
     image: null,
     description: '',
   });
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  // استدعاء الـ API لجلب النباتات
   useEffect(() => {
-    fetchPlants();
-  }, []);
-
-  const fetchPlants = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      console.log('=== Token Validation ===');
-      console.log('Current token in localStorage:', token);
-      console.log('Token length:', token?.length);
-      console.log('======================');
-
-      if (!token) {
-        setError('يرجى تسجيل الدخول أولاً');
-        return;
-      }
-
-      // تجهيز الكونفيج بنفس شكل التوكن اللي في صورة الـ login
-      const config = {
-        headers: {
-          'token': `${token}`  // نتأكد إن التوكن بيتبعت كاسترينج
+    const fetchPlants = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error('No token found in localStorage');
+          toast.error('Please login first');
+          navigate('/login');
+          return;
         }
-      };
 
-      console.log('Making request with config:', config);
+        console.log('Using token from localStorage');
 
-      const res = await axios.get('https://green-world-vert.vercel.app/plant/get-plants', config);
-      console.log('Response:', res.data);
+        const response = await axios.get('https://green-world-vert.vercel.app/plant/', {
+          headers: {
+            'token': token
+          }
+        });
 
-      if (res.data && Array.isArray(res.data)) {
-        setPlants(res.data);
-        setError(null);
-      } else {
-        setPlants([]);
-        setError('لم يتم العثور على نباتات');
+        console.log('API Response:', response.data);
+
+        if (response.data.success) {
+          if (Array.isArray(response.data.plants)) {
+            setPlants(response.data.plants);
+            console.log('Plants loaded:', response.data.plants.length);
+          } else {
+            console.error('Plants data is not an array:', response.data.plants);
+            setError('Invalid data format received');
+          }
+        } else {
+          setError('Failed to fetch plants');
+          console.error('API returned success: false');
+        }
+      } catch (err) {
+        console.error('Error fetching plants:', err);
+        if (err.response?.status === 401) {
+          toast.error('Session expired. Please login again');
+          navigate('/login');
+        } else {
+          setError(err.message || 'An error occurred while fetching plants');
+          toast.error('Failed to load plants');
+        }
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error('=== Fetch Plants Error ===');
-      console.error('Error details:', {
-        status: err.response?.status,
-        message: err.response?.data?.message,
-        token: localStorage.getItem('token')
-      });
-      setError(err.response?.data?.message || 'حدث خطأ أثناء جلب النباتات');
-      setPlants([]);
-    }
-  };
+    };
+
+    fetchPlants();
+  }, [navigate]);
+
+  // إضافة console.log لتتبع حالة المكون
+  console.log('Current state:', { loading, error, plantsLength: plants?.length });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -110,11 +121,10 @@ const Plant = () => {
     setLoading(true);
 
     try {
-      // استخدام التوكن من مثال الـ cURL للاختبار
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1obXdkYmhqdDMwN0BnbWFpbC5jb20iLCJfaWQiOiI2N2JhNWJkMmJhOWQ5MDI3ZGY2NWIyYzEiLCJpYXQiOjE3NDAyNjY0ODZ9.1JbZhGqJ3vDTQ3X7p3O_JHJDV9vYvL54XlmrCGAuI-s';
+      const token = localStorage.getItem('token');
 
       console.log('=== Submit Debug ===');
-      console.log('Using test token:', token);
+      console.log('Using token from localStorage');
 
       const formData = new FormData();
       formData.append('name', newPlant.name);
@@ -180,197 +190,99 @@ const Plant = () => {
     }
   };
 
-  return (
-    <div className="container mt-4">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1>Plant List</h1>
-        <button
-          className="btn btn-success"
-          onClick={() => setShowAddForm(!showAddForm)}
-        >
-          {showAddForm ? 'Cancel' : 'Add New Plant'}
-        </button>
+  if (loading) {
+    return (
+      <div className={styles.loadingContainer}>
+        <Spinner size="xl" color="#2c7a4b" />
+        <p>Loading plants...</p>
       </div>
+    );
+  }
 
-      {error && <div className="alert alert-danger">{error}</div>}
+  if (error) {
+    return (
+      <div className={styles.errorContainer}>
+        <p>Error: {error}</p>
+      </div>
+    );
+  }
 
-      {showAddForm && (
-        <form onSubmit={handleSubmit} className="mb-4">
-          <div className="row">
-            <div className="col-md-6 mb-3">
-              <input
-                type="text"
-                name="name"
-                value={newPlant.name}
-                onChange={handleInputChange}
-                placeholder="Plant Name"
-                className="form-control"
-                required
-              />
-            </div>
-            <div className="col-md-6 mb-3">
-              <input
-                type="text"
-                name="scientificName"
-                value={newPlant.scientificName}
-                onChange={handleInputChange}
-                placeholder="Scientific Name"
-                className="form-control"
-                required
-              />
-            </div>
-            <div className="col-md-6 mb-3">
-              <input
-                type="text"
-                name="category"
-                value={newPlant.category}
-                onChange={handleInputChange}
-                placeholder="Category"
-                className="form-control"
-                required
-              />
-            </div>
-            <div className="col-md-6 mb-3">
-              <input
-                type="text"
-                name="origin"
-                value={newPlant.origin}
-                onChange={handleInputChange}
-                placeholder="Origin"
-                className="form-control"
-                required
-              />
-            </div>
-            <div className="col-md-6 mb-3">
-              <select
-                name="wateringFrequency"
-                value={newPlant.wateringFrequency}
-                onChange={handleInputChange}
-                className="form-control"
-                required
-              >
-                <option value="Daily">Daily</option>
-                <option value="Weekly">Weekly</option>
-                <option value="Biweekly">Biweekly</option>
-                <option value="Monthly">Monthly</option>
-              </select>
-            </div>
-            <div className="col-md-6 mb-3">
-              <input
-                type="text"
-                name="soilType"
-                value={newPlant.soilType}
-                onChange={handleInputChange}
-                placeholder="Soil Type"
-                className="form-control"
-                required
-              />
-            </div>
-            <div className="col-md-6 mb-3">
-              <input
-                type="number"
-                name="maxTemp"
-                value={newPlant.temperatureRange.max}
-                onChange={handleInputChange}
-                placeholder="Maximum Temperature"
-                className="form-control"
-                required
-              />
-            </div>
-            <div className="col-md-6 mb-3">
-              <input
-                type="number"
-                name="minTemp"
-                value={newPlant.temperatureRange.min}
-                onChange={handleInputChange}
-                placeholder="Minimum Temperature"
-                className="form-control"
-                required
-              />
-            </div>
-            <div className="col-md-6 mb-3">
-              <input
-                type="file"
-                name="image"
-                onChange={handleImageChange}
-                className="form-control"
-                accept="image/*"
-                required
-              />
-            </div>
-            <div className="col-md-6 mb-3">
-              <textarea
-                name="description"
-                value={newPlant.description}
-                onChange={handleInputChange}
-                placeholder="Description"
-                className="form-control"
-                required
-              />
-            </div>
-          </div>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={loading}
-          >
-            {loading ? 'Adding...' : 'Add Plant'}
-          </button>
-        </form>
-      )}
+  // إضافة console.log قبل عرض الجدول
+  console.log('Rendering table with plants:', plants);
 
-      {plants.length > 0 ? (
-        <div className="table-responsive">
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Scientific Name</th>
-                <th>Category</th>
-                <th>Origin</th>
-                <th>Watering Frequency</th>
-                <th>Soil Type</th>
-                <th>Temp (Max)</th>
-                <th>Temp (Min)</th>
-                <th>Image</th>
-                <th>Description</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {plants.map((plant) => (
-                <tr key={plant.id}>
+  return (
+    <motion.div 
+      className={styles.plantContainer}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h2 className={styles.title}>Plants List</h2>
+      <div className={styles.tableWrapper}>
+        <table className={styles.plantTable}>
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Scientific Name</th>
+              <th>Category</th>
+              <th>Origin</th>
+              <th>Watering</th>
+              <th>Soil Type</th>
+              <th>Temperature</th>
+              <th>Description</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {plants.length > 0 ? (
+              plants.map((plant) => (
+                <motion.tr
+                  key={plant._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <td>
+                    {plant.Image?.secure_url ? (
+                      <img 
+                        src={plant.Image.secure_url} 
+                        alt={plant.name}
+                        className={styles.plantImage}
+                      />
+                    ) : (
+                      <span>No image</span>
+                    )}
+                  </td>
                   <td>{plant.name}</td>
                   <td>{plant.scientificName}</td>
                   <td>{plant.category}</td>
                   <td>{plant.origin}</td>
                   <td>{plant.wateringFrequency}</td>
                   <td>{plant.soilType}</td>
-                  <td>{plant.temperatureRange.max}</td>
-                  <td>{plant.temperatureRange.min}</td>
                   <td>
-                    <img
-                      src={plant.image}
-                      alt={plant.name}
-                      style={{ width: '50px', height: '50px', objectFit: 'cover' }}
-                    />
+                    {plant.temperatureRange ? 
+                      `${plant.temperatureRange.min}°C - ${plant.temperatureRange.max}°C` : 
+                      'N/A'
+                    }
                   </td>
-                  <td>{plant.description}</td>
-                  <td>
-                    <span className={`badge ${plant.status === 'active' ? 'bg-success' : 'bg-danger'}`}>
-                      {plant.status === 'active' ? 'Active' : 'Inactive'}
-                    </span>
+                  <td className={styles.description}>{plant.description}</td>
+                  <td className={styles.status}>
+                    <FaCheckCircle className={styles.statusIconSuccess} />
                   </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <p>No plants found.</p>
-      )}
-      <ToastContainer />
-    </div>
+                </motion.tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="10" style={{ textAlign: 'center', padding: '20px' }}>
+                  No plants found. Add some plants to see them here!
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </motion.div>
   );
 };
 
