@@ -1,7 +1,7 @@
 .updateContent {
     max-width: 100%;
     margin: 0;
-    padding: 0;
+    padding: 20px;
     background-color: #ffffff;
 }
 
@@ -9,15 +9,13 @@
     color: #4A3728;
     font-size: 2rem;
     font-weight: 600;
-    margin: 0;
-    padding: 20px 40px;
+    margin: 0 0 20px 0;
 }
 
 .formSection {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 20px 40px;
+    gap: 15px;
 }
 
 .formGroup {
@@ -36,9 +34,9 @@
 .formGroup input,
 .formGroup select,
 .formGroup textarea {
-    padding: 12px;
+    padding: 8px 12px;
     border: 1px solid #e0e0e0;
-    border-radius: 6px;
+    border-radius: 4px;
     font-size: 1rem;
     width: 100%;
     background-color: #fff;
@@ -58,11 +56,7 @@
 @media (max-width: 768px) {
     .inputRow {
         flex-direction: column;
-        gap: 20px;
-    }
-
-    .updateContent {
-        padding: 20px;
+        gap: 15px;
     }
 }
 
